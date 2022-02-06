@@ -1623,6 +1623,11 @@ impl VcpuFd {
     #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
     pub unsafe fn sync_regs(&self) -> kvm_sync_regs {
         let kvm_run: &mut kvm_run = self.kvm_run_ptr.as_mut_ref();
+
+        println!("kvm_run base:   {:#x}", std::ptr::addr_of!(kvm_run) as usize);
+        println!("kvm_run.s:      {:#x}", std::ptr::addr_of!(kvm_run.s) as usize);
+        println!("kvm_run.s.regs: {:#x}", std::ptr::addr_of!(kvm_run.s.regs) as usize);
+
         kvm_run.s.regs
     }
 
@@ -1650,6 +1655,7 @@ impl VcpuFd {
     #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
     pub unsafe fn sync_regs_mut(&mut self) -> &mut kvm_sync_regs {
         let kvm_run: &mut kvm_run = self.kvm_run_ptr.as_mut_ref();
+
         &mut kvm_run.s.regs
     }
 }

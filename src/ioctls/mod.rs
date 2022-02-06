@@ -63,6 +63,10 @@ impl KvmRunWrapper {
                 0,
             )
         };
+
+
+        println!("MMAP: {:#x} size {:#x}", addr as usize, size);
+
         if addr == libc::MAP_FAILED {
             return Err(errno::Error::last());
         }
